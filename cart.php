@@ -131,6 +131,8 @@ include("./functions/functions.php");
                  global $con;
                   $get_cart_item="select * from cart where ip_add='$ip' ";
                   $get_cart_item=mysqli_query($con,$get_cart_item);
+                  $tot=0;
+                  $tot_qty=0;
                   while($row_cart=mysqli_fetch_array($get_cart_item)){
                     $pro_qty=$row_cart['qty'];
                     $pro_id=$row_cart['p_id'];
@@ -143,13 +145,20 @@ include("./functions/functions.php");
                     if($len>40)
                     $pro_title = substr($pro_title,0,40).'...';
                     $sub_tot=$pro_qty*$pro_price;
+                    $tot=$tot+$sub_tot;
+                    $tot_qty=$tot_qty+$pro_qty;
                     echo "
                     <tr style='border-bottom: 1px solid #ccc;'><td width='40%' align='left'>$pro_title</td><td width='15%' align=
-                    'left' >$pro_qty</td><td width='15%' align='left' >$sub_tot</td></tr>
+                    'left' >$pro_qty</td><td width='15%' align='left' >₹ $sub_tot</td></tr>
                     ";
                   }
+                  echo "<tr><th align=
+                    'left' >Total</th><th align='left'>$tot_qty</th><th align=
+                    'left'>₹ $tot</th></tr>";
               ?>
+
             </table>
+          
             </div>
           </div>
         </div>
