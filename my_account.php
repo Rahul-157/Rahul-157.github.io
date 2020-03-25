@@ -15,31 +15,62 @@ if(!isset($_SESSION['customer_email'])){
     <link rel="stylesheet" href="./styles/style.css?v=<?php echo time(); ?>">
   </head>
   <body>
-    <div class="main_wrapper" style="background:pink">
+    <div class="main_wrapper" >
 
       
 
-        <div class="menubar">
+       <div class="menubar">
+          <a href="index.php" ><img style="float:left;padding-left: 90px;padding-top: 5px" src="images/logo.png" height="40" width="40"></a>
           <ul id="menu">
-            <li><a href="index.php">Home</a></li>
             <li><a href="index.php">All Products</a></li>
-            <li><a href="my_account">My Account</a></li>
-            <li><a href="customer_register.php">Sign Up</a></li>
             <li><a href="cart.php">My Cart</a></li>
             <li><a href="#">Contact Us</a></li>
-          </ul>
+          <li >
           <div id="form">
             <form method="get"  action="results.php" enctype="multipart/form-data">
-              <input type="text" name="user_query" placeholder="Search Products"/>
-              <input type="submit" name="search" value="Search" />
+              <input class ="ipt" type="text" name="user_query" placeholder="Search Products"/>
+              <input id="sbt_btn" type="submit" name="search" value="Search" />
             </form>
           </div>
+</li>
+          <li >
+          <?php 
+          global $con;
+              if(!isset($_SESSION['customer_email'])) {
+                echo "<span style='padding:0px 2px 0px 35px'>Welcome Guest</span><img src='images/user.jpeg' style='padding:0px 2px 0px 5px;vertical-align: middle' width='30' height='30'>";
+              }
+
+              else {
+                $mail=$_SESSION['customer_email'];
+                 $q="select customer_image from customers where customer_email='$mail' ";
+                  $q=mysqli_query($con,$q);
+                 $q=mysqli_fetch_array($q);
+                 $q=$q['customer_image'];
+                 $name=$_SESSION['customer_name'];
+
+            echo "<span style='padding:0px 2px 0px 35px'>Welcome $name</span><a href='my_account.php'><img src='customer/customer_images/$q' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
+
+      
+            }
+              ?>  
+              <?php
+              if(!isset($_SESSION['customer_email'])) {
+                echo "<a href='checkout.php' style='text-decoration:none; color:white;'>Login</a>";
+              }
+              else {
+                echo "<a href='logout.php' style='text-decoration:none; color:white;'>Logout</a>";
+              }?></li>
+              </ul>
         </div>
 
-        <div class="content_wrapper">
+        <div class="content_wrapper" style=" width:100%;
+  height:auto;
+  display: flex;
+  margin-top:auto;
+  background:#f4f7f6;">
           <div id="sidebar">
-            <div id="sidebar_container"  >
-            <span class="sidebar_title" style="padding-top:15px;padding-bottom:15px"> My Account </span>
+            <div id="sidebar_container" >
+            <ul class="sidebar_title" > <li>My Account</li> </ul>
             <?php
             global $con;
             $mail=$_SESSION['customer_email'];
@@ -48,7 +79,7 @@ if(!isset($_SESSION['customer_email'])){
             $q=mysqli_fetch_array($q);
             $q=$q['customer_image'];
 
-            echo "<p style='text-align:center '><img src='customer/customer_images/$q' style='border:2px solid white; padding:2px ; margin:2px; '  width='150' height='150' ></p>";
+            echo "<p style='text-align:center '><img src='customer/customer_images/$q' style='border:2px solid white; margin:2px; border-radius:100px'  width='120' height='120' ></p>";
 
 
              ?>
@@ -63,29 +94,19 @@ if(!isset($_SESSION['customer_email'])){
           </div>
 
           <div id="content_area" >
-
-            <div id="shopping_cart">
-              <span style ="float:right; margin:auto ; font-size:18px padding:5px;line-height:50px;"> <b style="color:yellow">Shopping Cart - </b>Total Items:<?php total_itemf();?>  Total Price: <?php total_costf();?> <a href="cart.php" style="color:cyan">Go to  Cart</a>
-              <?php
-              if(!isset($_SESSION['customer_email'])) {
-                echo "<a href='checkout.php' style='text-decoration:none; color:white;'>Login</a>";
-              }
-              else {
-                echo "<a href='logout.php' style='text-decoration:none; color:white;'>Logout</a>";
-              }
-              ?></span>
-            </div>
-
+<div id="products_box">
+ 
             <?php
+          
             if(isset($_GET['edit_account']))
             {
               include('update_account.php');
             }
-            if(isset($_GET['change_pass']))
+            else if(isset($_GET['change_pass']))
             {
               include('change_pass.php');
             }
-            if(isset($_GET['delete_account']))
+            else if(isset($_GET['delete_account']))
             {
               $mail=$_SESSION['customer_email'];
               echo $mail;
@@ -93,14 +114,21 @@ if(!isset($_SESSION['customer_email'])){
               $rem_user=mysqli_query($con,$rem_user);
               if($rem_user){
               session_destroy();
-              echo "<script>window.open('index.php','_self')</script>";}
+              echo "<script>window.location.assign('index.php')</script>";}
              
             }
+            else if(isset($_GET['my_orders']))
+            {
+              //include('change_pass.php');
+            }
+            else
+              include('account_details.php');
              ?>
           </div>
         </div>
+        </div>
         <div id="footer">
-          <h2 style="text-align:center;padding:10px">&copy; 2019 by Rahul </h2>
+          <h2 style="text-align:center;padding:10px">&copy; 2020 by Rahul </h2>
         </div>
     </div>
   </body>

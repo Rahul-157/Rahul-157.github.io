@@ -22,42 +22,29 @@ include("./functions/functions.php");
     $image = $row_customer['customer_image'];
 
 ?>
-
-            <form  action=""  method="post" enctype="multipart/form-data">
-              <table align="center" width="750">
-                <tr>
-                  <th align="center" colspan="2">Update Your Account</th>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your Name">Name</td>
-                  <td> <input type="text" name="c_name" required> </td>
-                </tr>
-
-
-                <tr>
-                  <td align="right">Upload Image</td>
-                  <td> <input type="file" name="c_image" > </td>
-                </tr>
-                <tr>
-                  <td align="right">Country</td>
-                  <td> <input type="text" name="c_country"  placeholder="Enter Your Country" required> </td>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your City">City</td>
-                  <td> <input type="text" name="c_city"  required> </td>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your Contact">Contact No.</td>
-                  <td> <input type="text" name="c_contact" required> </td>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your Address">Adress</td>
-                  <td> <textarea name="c_addr" rows="10" cols="30" ></textarea> </td>
-                </tr>
-                <tr>
-                  <td align="center" colspan="2"> <input type="submit" name="Update"> </td>
-                </tr>
-              </table>
+<script type="text/javascript">
+  function getFile(){
+     document.getElementById("upfile").click();
+}</script>
+              <form  align="center" action=""  method="post" enctype="multipart/form-data">
+             <h3>Update Details</h3><br>
+               <label>Name</label>
+              <input class='ipt' type="text" name="c_name" value="<?php echo $name;?>" required><br>
+               <label>Email</label>
+                   <input class='ipt' type="text" name="c_email" value="<?php echo $email;?>" required> <br>
+                   <label>Password</label>
+                  <input class='ipt' type="password" name="c_password" required > <br>
+                  <label>Country</label>
+                   <input class='ipt' type="text" name="c_country" value="<?php echo $country;?>" placeholder="Enter Your Country" required><br>
+               <label>City</label>
+                  <input class='ipt' type="text" name="c_city"  value="<?php echo $city;?>" required><br>
+                  <label>Contact No</label>
+                  <input class='ipt' type="text" name="c_contact" value="<?php echo $contact;?>" required><br>
+                  <label>Address</label>
+                   <textarea class='ipt' name="c_addr" rows="20"  cols="30" ><?php echo $address; ?></textarea> <br>
+                   <label id="img_upload" onclick="getFile();">Upload Image</label>
+                  <div  style='height: 0px;width:0px; overflow:hidden;'> <input class='ipt' type="file" hidden="true" name="c_image" id="upfile" ></div><br>
+                  <input class='btn' type="submit" name="Update" value="Update"> 
             </form>
 
             <?php

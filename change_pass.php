@@ -3,26 +3,15 @@
 include("./functions/functions.php");
 ?>
 <form  action="" method="post" enctype="multipart/form-data">
-  <table align="center" width="750">
-    <tr>
-      <th align="center" colspan="2">Update Your Password</th>
-    </tr>
-    <tr>
-      <td align="right" >Enter Your Current Password</td>
-      <td> <input type="password" name="c_pass" required> </td>
-    </tr>
-    <tr>
-      <td align="right" >Enter New Password</td>
-      <td> <input type="password" name="n_pass" required> </td>
-    </tr>
-    <tr>
-      <td align="right" >Confirm New Password</td>
-      <td> <input type="password" name="nn_pass" required> </td>
-    </tr>
-    <tr>
-      <td align="center" colspan="2"> <input type="submit" name="Update"> </td>
-    </tr>
-  </table>
+ <h3><b>Update Your Password</b></h3><br>
+    <label>Current Password</label>
+<input class='ipt' type="password" name="c_pass" required> <br>
+   <label>New Password</label>
+      <input class='ipt' type="password" name="n_pass" required><br>
+      <label>Confirm Password</label>
+    <input class='ipt' type="password" name="nn_pass" required> <br>
+      <input class='btn' type="submit"  value="Update" name="Update">
+   
 </form>
 <?php
 

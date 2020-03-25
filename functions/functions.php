@@ -49,24 +49,69 @@ function getIp() {
 }
 }
 
-if (!function_exists('cart')){
-function cart(){
-  global $con;
-  if(isset($_GET['add_cart']))
-  {
+if (!function_exists('add_cart')){
+function add_cart($pro_id){
+    global $con;
     $ip = getIp();
-    $pro_id=$_GET['add_cart'];
+    
     $check_pro="select * from cart where p_id=$pro_id and ip_add='$ip' ";
     $run_check=mysqli_query($con,$check_pro);
-    if(mysqli_num_rows($run_check)>0){
+    if(mysqli_num_rows($run_check)==1){
+      $row=mysqli_fetch_array($run_check);
+      $qty=$row['qty']+1;
+      $insert_pro="update  cart set qty=$qty where ip_add='$ip' and p_id=$pro_id ";
+      $run_pro=mysqli_query($con,$insert_pro);
+
+      echo "<script>
+      var loc = window.location.href;
+      loc=loc.split('?');
+      window.location.assign(loc[0])</script>";
     }
-    else{
+    else
+    {
       $insert_pro="insert into cart (p_id,ip_add,qty) values($pro_id,'$ip',1) ";
       $run_pro=mysqli_query($con,$insert_pro);
-      echo "<script>window.open('index.php','self')</script>";
+      echo "<script>var loc = window.location.href;
+      loc=loc.split('?');
+      window.location.assign(loc[0])</script>";
     }
   }
 }
+
+
+
+
+if (!function_exists('remove_cart')){
+function remove_cart($pro_id){
+    global $con;
+    $ip = getIp();
+    
+    $check_pro="select * from cart where p_id=$pro_id and ip_add='$ip' ";
+    $run_check=mysqli_query($con,$check_pro);
+    if(mysqli_num_rows($run_check)==1){
+      $row=mysqli_fetch_array($run_check);
+      $qty=$row['qty']-1;
+      if ($qty==0){
+      $remove_pro="delete  from cart where ip_add='$ip' and p_id=$pro_id ";
+      $run_pro=mysqli_query($con,$remove_pro);
+      echo "<script>
+      var loc = window.location.href;
+      loc=loc.split('?');
+      window.location.assign(loc[0])</script>";
+      }
+      else
+      {
+      $remove_pro="update  cart set qty=$qty where ip_add='$ip' and p_id=$pro_id ";
+      $run_pro=mysqli_query($con,$remove_pro);
+      echo "<script>
+      var loc = window.location.href;
+      loc=loc.split('?');
+      window.location.assign(loc[0])</script>";
+      }
+     
+    }
+    
+  }
 }
 
 if (!function_exists('getPro')){
@@ -88,17 +133,23 @@ function getPro()
   while($row_pro=mysqli_fetch_array($run_pro)){
     $pro_id=$row_pro['product_id'];
     $pro_title=$row_pro['product_title'];
+    $len=strlen($pro_title);
+    if($len>40)
+    $pro_title = substr($pro_title,0,40).'...';
     $pro_image=$row_pro['product_image'];
     $pro_price=$row_pro['product_price'];
     echo "
+    <a href='details.php?pro_id=$pro_id'>
     <div class='single_product'>
-      <p class='single_product_title'>$pro_title</p>
-      <img src='admin_area/product_images/$pro_image' width='180' height='180'>
-      <p>Price : Rs. $pro_price </p>
-      <a href='details.php?pro_id=$pro_id' sty><button >Details</button></a>
-      <a href='index.php?add_cart=$pro_id'><button >Add to Cart</button></a>
+      <img src='admin_area/product_images/$pro_image'>
+      <div class='single_product_container'>
+      <div class='single_product_title'>$pro_title </div><br></a>
+      <p class='single_product_price'>₹$pro_price
+       <a href='index.php?add_cart=$pro_id' style='float:right'><button>Add to Cart</button></a>
+     </p>
+      </div>
     </div>
-
+    
     ";
   }
 }
@@ -146,18 +197,23 @@ function getPro_search(){
       while($row_pro=mysqli_fetch_array($run_pro)){
         $pro_id=$row_pro['product_id'];
         $pro_title=$row_pro['product_title'];
+         $len=strlen($pro_title);
+    if($len>40)
+    $pro_title = substr($pro_title,0,40).'...';
         $pro_image=$row_pro['product_image'];
         $pro_price=$row_pro['product_price'];
         echo "
-        <div class='single_product'>
-          <h2>$pro_title</h2>
-          <img src='admin_area/product_images/$pro_image' width='180' height='180'>
-          <p>Price : Rs. $pro_price </p>
-
-          <a href='details.php?pro_id=$pro_id' style='float:left;  font-weight:bold;'><span style='color:black;'> Details</span></a>
-          <a href='index.php?add_cart=$pro_id'><button style='float:right'>Add to Cart</button></a>
-        </div>
-
+       <a href='details.php?pro_id=$pro_id'>
+    <div class='single_product'>
+      <img src='admin_area/product_images/$pro_image'>
+      <div class='single_product_container'>
+      <div class='single_product_title'>$pro_title </div><br></a>
+      <p class='single_product_price'>₹$pro_price
+       <a href='index.php?add_cart=$pro_id' style='float:right'><button>Add to Cart</button></a>
+     </p>
+      </div>
+    </div>
+    
         ";
       }
     }

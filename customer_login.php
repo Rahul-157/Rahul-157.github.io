@@ -4,24 +4,24 @@ include("functions/functions.php");
  ?>
 <div >
   <form   method="post">
-    <table width = "500" bgcolor="skyblue" align="center"  cellpadding="10">
+    <table width = "500"  align="center"  cellpadding="10">
       <tr align="center"  >
         <th colspan="2" >Login to Checkout !</th>
       </tr>
       <tr >
-      <td align="right">Email</td>
-      <td>  <input type="text" name="email" size="30"/> </td>
+      <td align="left">Email</td>
+      <td>  <input class="ipt" type="text" name="email" size="30"/> </td>
       </tr>
       <tr >
-        <td align="right">Password</td>
-        <td> <input type="password" name="pass" size="30"/> </td>
+        <td align="left">Password</td>
+        <td> <input class="ipt" type="password" name="pass" size="30"/> </td>
       </tr>
       <tr >
-        <td align="left" colspan="2"> <a href="customer_register.php" style="text-decoration:none; color:black" ><b> Register </b></a> </td>
-        <td colspan="2" align="right"> <a href="checkout.php?forgot_pass" style="text-decoration:none ; color:black"><b>Forgot Password</b></a> </td>
+        <td align="left" > <a href="customer_register.php" style="text-decoration:none; color:#17a5b2" ><b> Register </b></a> </td>
+        <td align="right"> <a href="checkout.php?forgot_pass" style="text-decoration:none ; color:#17a5b2"><b>Forgot Password</b></a> </td>
       </tr>
       <tr align ="center" >
-        <td colspan="2"> <input type="submit" name="login" value="Login" /> </td>
+        <td colspan="2"> <input class="btn" style="height: 30px;width: 90px" type="submit" name="login" value="Login" /> </td>
       </tr>
     </table>
   </form>

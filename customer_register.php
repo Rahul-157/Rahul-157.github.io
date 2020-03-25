@@ -5,36 +5,70 @@ include("./functions/functions.php");
 ?>
 <html lang="en" dir="ltr">
   <head>
+    <script type="text/javascript">
+  function getFile(){
+     document.getElementById("upfile").click();
+}</script>
     <meta charset="utf-8">
     <title>My Online Shop</title>
 
     <link rel="stylesheet" href="./styles/style.css?v=<?php echo time(); ?>">
   </head>
   <body>
+    <?php cart();?>
     <div class="main_wrapper">
 
        
+
         <div class="menubar">
+          <a href="index.php" ><img style="float:left;padding-left: 90px;padding-top: 5px" src="images/logo.png" height="40" width="40"></a>
           <ul id="menu">
-            <li><a href="index.php">Home</a></li>
             <li><a href="index.php">All Products</a></li>
-            <li><a href="my_account.php">My Account</a></li>
-            <li><a href="customer_register.php">Sign Up</a></li>
             <li><a href="cart.php">My Cart</a></li>
             <li><a href="#">Contact Us</a></li>
-          </ul>
+          <li >
           <div id="form">
             <form method="get"  action="results.php" enctype="multipart/form-data">
-              <input type="text" name="user_query" placeholder="Search Products"/>
-              <input type="submit" name="search" value="Search" />
+              <input class ="ipt" type="text" name="user_query" placeholder="Search Products"/>
+              <input id="sbt_btn" type="submit" name="search" value="Search" />
             </form>
           </div>
-        </div>
+</li>
+          <li >
+          <?php 
+          global $con;
+              if(!isset($_SESSION['customer_email'])) {
+                echo "<span style='padding:0px 2px 0px 35px'>Welcome Guest</span><img src='images/user.jpeg' style='padding:0px 2px 0px 5px;vertical-align: middle' width='30' height='30'>";
+              }
 
-        <div class="content_wrapper">
+              else {
+                $mail=$_SESSION['customer_email'];
+                 $q="select customer_image from customers where customer_email='$mail' ";
+                  $q=mysqli_query($con,$q);
+                 $q=mysqli_fetch_array($q);
+                 $q=$q['customer_image'];
+                 $name=$_SESSION['customer_name'];
+
+            echo "<span style='padding:0px 2px 0px 35px'>Welcome $name</span><a href='my_account.php'><img src='customer/customer_images/$q' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
+
+      
+            }
+              ?>  
+              <?php
+              if(!isset($_SESSION['customer_email'])) {
+                echo "<a href='checkout.php' style='text-decoration:none; color:white;'>Login</a>";
+              }
+              else {
+                echo "<a href='logout.php' style='text-decoration:none; color:white;'>Logout</a>";
+              }?></li>
+              </ul>
+        </div>
+        
+
+        <div id="content_wrapper">
           <div id="sidebar">
             <div id="sidebar_container">
-            <span class="sidebar_title"> Categories </span>
+            <ul class="sidebar_title" > <li>Categories <li></ul>
               <ul class="sidebar_links">
                 <?php getCats(); ?>
               </ul>
@@ -46,64 +80,33 @@ include("./functions/functions.php");
               </ul>
             </div>
           </div>
+
           <div id="content_area">
-            <?php cart(); ?>
-            <div id="shopping_cart">
-              <span style ="float:right; margin:auto ; font-size:18px padding:5px;line-height:50px;">Welcome Guest ! <b style="color:yellow">Shopping Cart - </b>Total Items:<?php total_itemf();?>  Total Price: <?php total_costf();?> <a href="cart.php" style="color:yellow">Go to  Cart</a>
-                <?php cart(); ?>
-                <?php
-                  if(!isset($_SESSION['customer_email'])) {
-                    echo "<a href='checkout.php style='text-decoration:none; color:white;'>Login</a>";
-                  }
-                  else {
-                    echo "<a href='logout.php' style='text-decoration:none; color:white;'>Logout</a>";
-                  }
-                  ?></span>
-            </div>
+            <div id="products_box">
 
+<br>
             <form  action="customer_register.php"  method="post" enctype="multipart/form-data">
-              <table align="center" width="750">
-                <tr>
-                  <th align="center" colspan="2">Create an Account</th>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your Name">Name</td>
-                  <td> <input type="text" name="c_name" required> </td>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your Email">Email</td>
-                  <td> <input type="text" name="c_email"  required> </td>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your Password">Password</td>
-                  <td> <input type="password" name="c_password" required > </td>
-                </tr>
-                <tr>
-                  <td align="right">Upload Image</td>
-                  <td> <input type="file" name="c_image" > </td>
-                </tr>
-                <tr>
-                  <td align="right">Country</td>
-                  <td> <input type="text" name="c_country"  placeholder="Enter Your Country" required> </td>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your City">City</td>
-                  <td> <input type="text" name="c_city"  required> </td>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your Contact">Contact No.</td>
-                  <td> <input type="text" name="c_contact" required> </td>
-                </tr>
-                <tr>
-                  <td align="right" placeholder="Enter Your Address">Contact No.</td>
-                  <td> <textarea name="c_addr" rows="10" cols="30" ></textarea> </td>
-                </tr>
-                <tr>
-                  <td align="center" colspan="2"> <input type="submit" name="Register"> </td>
-                </tr>
-              </table>
+             <h3>Create an Account</h3><br>
+               <label>Name</label>
+              <input class='ipt' type="text" name="c_name" required><br>
+               <label>Email</label>
+                   <input class='ipt' type="text" name="c_email"  required> <br>
+                   <label>Password</label>
+                  <input class='ipt' type="password" name="c_password" required > <br>
+                  <label>Country</label>
+                   <input class='ipt' type="text" name="c_country"   required><br>
+               <label>City</label>
+                  <input class='ipt' type="text" name="c_city"  required><br>
+                  <label>Contact No</label>
+                  <input class='ipt' type="text" name="c_contact"  required><br>
+                  <label>Address</label>
+                   <textarea class='ipt' name="c_addr" rows="20"  cols="30" ></textarea> <br>
+                   <label id="img_upload" onclick="getFile();">Upload Image</label>
+                  <div  style='height: 0px;width:0px; overflow:hidden;'> <input class='ipt' type="file" hidden="true" name="c_image" id="upfile" ></div><br>
+                  <input class='btn' type="submit" name="Register" value="Register"> 
             </form>
-
+</div>
+</div>
             <?php
             global $con;
             global $total_cost;
@@ -141,7 +144,7 @@ include("./functions/functions.php");
           </div>
         </div>
         <div id="footer">
-          <h2 style="text-align:center;padding:10px">&copy; 2019 by Rahul </h2>
+          <h2 style="text-align:center;padding:10px">&copy; 2020 by Rahul </h2>
         </div>
     </div>
   </body>
