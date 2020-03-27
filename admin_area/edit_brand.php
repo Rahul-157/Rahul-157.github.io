@@ -1,23 +1,17 @@
-<form method="post">
-  <table width="795" align="center" bgcolor="pink" cellpadding="6" border="2 ">
-    <tr>
-      <h2> Edit  Brand</h2>
-    </tr>
-    <tr>
-       <td align="center"><input type="text" name="up_brand" placeholder="Enter New Brand Name"></td>
-    </tr>
-    <tr>
-      <td align="center"> <input type="submit" name="done" value="Update"> </td>
-    </tr>
-  </table>
+<br>
+<h3 align="center" style="margin-left: 40px">Update Brand</h3><br>
+<form  action="" method="post"  style="margin-left:40px;text-align: center">
+<label>Update Brand</label>
+<input  class='ipt' type="text" name="up_brand" placeholder=" Brand Name" ><br>
+<input class='btn' type="submit" name="done" value="Update">
 </form>
 <?php
 include("includes/functions.php");
 global $con;
 if(isset($_POST['done'])){
 $brand_id=$_GET['edit_brand'];
-$brand_title=$_POST['up_brand'];
-$up_brand="update  brand set  brand_title='$brand_title' where brand_id='$brand_id' ";
+$brand_title=strtoupper($_POST['up_brand']);
+$up_brand="update  brands set  brand_title='$brand_title' where brand_id='$brand_id' ";
 $up_brand=mysqli_query($con,$up_brand);
 if($up_brand)
 {

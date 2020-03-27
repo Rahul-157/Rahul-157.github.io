@@ -20,7 +20,7 @@
           global $con;
             $mail=$_SESSION['admin_mail'];
           if(empty($_GET))
-        {  echo "<h3 style='padding-left:250px;padding-top:50px'>Welcome $mail </h3>"; }
+        {   include('view_products.php'); }
            include("includes/functions.php");
           if(isset($_GET['insert_product'])){
             include('insert_product.php');}
@@ -45,7 +45,17 @@
               if($rem_cat)
               {
                 echo "<script>alert('Success')</script>";
-                echo "<script>window.open('index.php','_self')</script>";
+                echo "<script>window.location.assign('index.php?view_cat')</script>";
+              }
+              }
+              if(isset($_GET['del_brand'])){
+              $brand_id=$_GET['del_brand'];
+              $rem_brand="delete from brands where brand_id='$brand_id' ";
+              $rem_brand=mysqli_query($con,$rem_brand);
+              if($rem_brand)
+              {
+                echo "<script>alert('Success')</script>";
+                echo "<script>window.location.assign('index.php?view_brand')</script>";
               }
               }
               if(isset($_GET['del_customer'])){
@@ -55,14 +65,14 @@
                 if($rem_cat)
                 {
                   echo "<script>alert('Success')</script>";
-                  echo "<script>window.open('index.php','_self')</script>";
+                  echo "<script>window.location.assign('index.php?view_customers')</script>";
                 }
                 }
             if(isset($_GET['edit_cat'])){
                   include('edit_cat.php');}
             if(isset($_GET['logout'])){
                   session_destroy();
-                echo "<script>window.open('index.php','_self')</script>";
+                echo "<script>window.location.assign('index.php')</script>";
                 }
             if(isset($_GET['edit_brand'])){
                   include('edit_brand.php');}
@@ -74,7 +84,7 @@
              if($run)
              {
                echo "<script>alert('Deleted Succesfully !')</script>";
-                echo "<script>window.open('index.php?view_product','_self')</script>";
+                echo "<script>window.location.assign('index.php?view_product')</script>";
              }
            }
 

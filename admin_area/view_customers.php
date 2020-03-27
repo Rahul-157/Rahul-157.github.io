@@ -8,7 +8,7 @@
     <td>Country</td>
     <td>City</td>
     <td>Contact</td>
-    <td>Address</td>
+   
     <td>Delete</td>
   </tr>
   <?php
@@ -35,7 +35,7 @@
       <td>$country</td>
       <td>$city</td>
       <td>$contact</td>
-      <td>$addr</td>
+      
       <td><a href='index.php?del_customer=$id'><button>Delete</button></a></td>
       </tr>
     ";

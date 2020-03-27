@@ -195,8 +195,8 @@ if (!function_exists('getPro_search')){
 function getPro_search(){
   global $con;
   if(isset($_GET['search'])){
-    $search_query=$_GET['user_query'];
-    $search_query=preg_split("/[\s,]+/", $search_query);
+    $search_query=strtoupper($_GET['user_query']);
+    $search_query=explode(' ', $search_query);
     foreach  ($search_query as $keyword) {
 
     $get_pro="select * from products where product_keywords like '%$keyword%' ";

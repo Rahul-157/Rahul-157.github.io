@@ -1,27 +1,20 @@
 <?php
 include("includes/functions.php");
-?>
-<form  action="" method="post" >
-<table width="795" align="center" bgcolor="pink" cellpadding="6" border="2 ">
-<tr align="center">
-  <td colspan="7" align="center"> <h2>Add a New Brand</h2> </td>
-</tr>
-<tr>
-  <td colspan="7" align="center"><input type="text" name="brand" placeholder=" Brand Name" ></td>
-</tr>
-<tr>
-<td colspan="7" align="center">  <input type="submit" name="add" value="Add Brand"></td>
-</tr>
-</table>
+?><br>
+<h3 align="center" style="margin-left: 40px">Insert New Brand</h3><br>
+<form  action="" method="post"  style="margin-left:40px;text-align: center">
+<label>Brand Name</label>
+<input  class='ipt' type="text" name="brand" placeholder=" Brand Name" ><br>
+<input class='btn' type="submit" name="add" value="Add Brand">
 </form>
 <?php
 global $con;
 if(isset($_POST['add'])){
-$new_brand=$_POST['brand'];
-$new="insert into brand (brand_title) values  ('$new_brand') ";
+$new_brand=strtoupper($_POST['brand']);
+$new="insert into brands (brand_title) values  ('$new_brand') ";
 $new=mysqli_query($con,$new);
 if($new){echo "<script>alert('Success')</script>";
-echo "<script>window.open('index.php?view_brand','_self')</script>";
+echo "<script>window.location.assign('index.php?view_brand')</script>";
 }
 }
 

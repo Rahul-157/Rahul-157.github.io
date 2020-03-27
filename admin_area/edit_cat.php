@@ -16,7 +16,7 @@ include("includes/functions.php");
 global $con;
 if(isset($_POST['done'])){
 $cat_id=$_GET['edit_cat'];
-$cat_title=$_POST['up_cat'];
+$cat_title=strtoupper($_POST['up_cat']);
 $up_cat="update  categories  set  cat_title='$cat_title' where cat_id='$cat_id' ";
 $up_cat=mysqli_query($con,$up_cat);
 if($up_cat)

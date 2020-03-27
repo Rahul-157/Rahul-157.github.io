@@ -6,21 +6,31 @@ include "./includes/functions.php"
    function getFile(){
      document.getElementById("upfile").click();
      }
+      function choose_cat(x){
+      if(x.value==-1){
+        alert('Please Select Category');
+      }
+     }
+     function choose_brand(x){
+      if(x.value==-1){
+        alert('Please Select Brand');
+      }
+     }
 </script>
 
     <form  style="margin-left:40px;text-align: center" name="reg" action="insert_product.php" method="post" enctype="multipart/form-data">
       <br>
-        <h3>Insert New Product</h3><br>
+        <h3 style="margin-left: 40px">Insert New Product</h3><br>
                <label>Title</label>
               <input class='ipt' type="text" name="product_title" required><br>
                <label>Category</label>
-                   <select  name="product_category" required>
+                   <select onfocusout="choose_cat()" name="product_category" required>
                      <option value="-1">Select a Category</option>
                          <?php showCats(); ?>
                     </select>
 <br>
                 <label>Brand</label>
-                    <select  name="product_brand" required>
+                    <select  onfocusout="choose_brand()" name="product_brand" required>
                      <option value="-1">Select a Brand</option>
                           <?php showBrands(); ?>
                      </select> 
@@ -47,7 +57,7 @@ $product_cat=$_POST['product_category'];
 $product_brand=$_POST['product_brand'];
 $product_price=$_POST['product_price'];
 $product_desc=$_POST['product_desc'];
-$product_keywords=$_POST['product_keywords'];
+$product_keywords=strtoupper($_POST['product_keywords']);
 $product_image=$_FILES['product_image']['name'];
 $product_image_tmp=$_FILES['product_image']['tmp_name'];
 move_uploaded_file($_FILES['product_image']['tmp_name'],$_SERVER['DOCUMENT_ROOT'] . '/ecommerce/admin_area/product_images/'. $_FILES['product_image']['name']);
@@ -56,7 +66,7 @@ $insert_product="insert into products (product_cat,product_brand,product_title,p
 $insert_pro=mysqli_query($con,$insert_product);
 if($insert_pro){
   echo "<script>alert('Product Added Succesfully')</script>";
- echo "<script>window.open('index.php?insert_product','_self')</script>";
+ echo "<script>window.location.assign('index.php?view_product')</script>";
 }
 }
 
