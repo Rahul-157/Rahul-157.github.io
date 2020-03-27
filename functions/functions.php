@@ -29,7 +29,7 @@ function getBrands(){
   while($row_brand=mysqli_fetch_array($run_brands)){
     $brand_id=$row_brand['brand_id'];
     $brand_title=$row_brand['brand_title'];
-    echo "<li><a href='index.php?brand=$brand_id'>$brand_title</a></li>";
+    echo "<li ><a href='index.php?brand=$brand_id'>$brand_title</a></li>";
   }
 }
 }
@@ -53,7 +53,6 @@ if (!function_exists('add_cart')){
 function add_cart($pro_id){
     global $con;
     $ip = getIp();
-    
     $check_pro="select * from cart where p_id=$pro_id and ip_add='$ip' ";
     $run_check=mysqli_query($con,$check_pro);
     if(mysqli_num_rows($run_check)==1){
@@ -75,6 +74,7 @@ function add_cart($pro_id){
       loc=loc.split('?');
       window.location.assign(loc[0])</script>";
     }
+    
   }
 }
 
@@ -110,7 +110,7 @@ function remove_cart($pro_id){
       }
      
     }
-    
+     $_SESSION['qty']--;
   }
 }
 
@@ -168,14 +168,21 @@ function getDetails()
     $pro_image=$row_pro['product_image'];
     $pro_price=$row_pro['product_price'];
     $pro_desc=$row_pro['product_desc'];
+    $pro_desc=explode(',',$pro_desc);
     echo "
-    <div class='single_product'>
-      <h2>$pro_title</h2>
-      <img src='admin_area/product_images/$pro_image'>
-      <p>Price : Rs. $pro_price </p>
-      <p style='text-align:center; font-weight:100 ; margin : auto; padding :10px;'>$pro_desc</p>
-      <a href='index.php' style='float:left;' > <button>Go Back</button></a>
-      <a href='index.php?add_cart=$product_id'><button style='float:right'>Add to Cart</button></a>
+    <div style='float:left' class='single_product'>
+      <img style='width:150px ;height:150px' src='admin_area/product_images/$pro_image'>
+      <p >Price : Rs. $pro_price</p>
+      </div>
+      <div style='position:absolute;top:75px;left: 500px;text-align:left'>
+      <h3>Details</h3>";
+      foreach ($pro_desc as $key ) {
+        # code...
+        echo "<p style='text-align:left; font-weight:100 ; margin : auto; padding :10px 0px 10px 0px;'>$key</p>";
+      }
+      echo"
+      <a href='index.php'  > <button>Go Back</button></a>
+      <a href='index.php?add_cart=$product_id'><button >Add to Cart</button></a>
     </div>
 
     ";
@@ -221,37 +228,4 @@ function getPro_search(){
 }
 }
 
-if (!function_exists('total_itemf')){
-function total_itemf(){
-  global $con;
-  global $total_cost;
-  global $total_item;
-  $ip=getIp();
-  $get_items="select sum(qty) as tot_item from cart where ip_add='$ip' ";
-  $run_item=mysqli_query($con,$get_items);
-  $run_item=mysqli_fetch_array($run_item);
-  $run_item=$run_item['tot_item'];
-  $total_item=$run_item;
-    echo "
-    <span style='color:yellow;margin-right:2px; margin-left:2px'>$run_item</span>
-    ";
-}
-}
-
-if (!function_exists('total_costf')){
-function total_costf(){
-  global $con;
-  global $total_cost;
-  global $total_item;
-  $ip=getIp();
-  $get_cost="select sum(qty*product_price) as tot_cost from cart inner join products on products.product_id=cart.p_id where ip_add='$ip' ";
-  $run_cost=mysqli_query($con,$get_cost);
-  $run_cost=mysqli_fetch_array($run_cost);
-  $run_cost=$run_cost['tot_cost'];
-  $total_cost=$run_cost;
-    echo "
-    <span style='color:yellow; margin-right:2px; margin-left:2px'>Rs. $run_cost</span>
-    ";
-}
-}
 ?>

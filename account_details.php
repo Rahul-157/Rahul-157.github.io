@@ -39,8 +39,8 @@ include("./functions/functions.php");
                   <label>Contact No</label>
                   <input class='ipt' type="text" name="c_contact" disabled value="<?php echo $contact;?>" required><br>
                   <label>Address</label>
-                   <textarea class='ipt' name="c_addr" rows="20"  disabled cols="30" ><?php echo $address; ?></textarea> <br>
-                
+                   
+                 <input class='ipt' type="text" name="c_addr" disabled value="<?php echo $address;?>" required><br>
             </form>
 
         

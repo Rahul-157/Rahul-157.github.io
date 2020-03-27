@@ -1,10 +1,7 @@
 <?php include("includes/functions.php") ?>
-<form   method="post">
-  <table width="795" align="center" bgcolor="pink" cellpadding="6" border="2 ">
-    <tr>
-      <td colspan='4' align='center'> <h2>All Brands</h2> </td>
-    </tr>
-    <tr>
+
+  <table table width="100%" align="center" bgcolor="white" cellpadding="6" cellspacing="0">
+    <tr style="background: #3989bf;color:white">
       <td  align='center'><b>Brand Id</b></td>
       <td   align='center'><b>Brand Title</b></td>
       <td  align='center'><b>Edit</b></td>
@@ -20,10 +17,9 @@
       echo "<tr>
       <td colspan='1' align='center'>$id</td>
       <td  align='center'>$title</td>
-      <td><a href='index.php?edit_brand=$id'>Edit</a></td>
-      <td><a href='index.php?del_brand=$id'>Delete</a></td>
+      <td><a href='index.php?edit_brand=$id'><button>Edit</button></a></td>
+      <td><a href='index.php?del_brand=$id'><button>Delete</button></a></td>
       </tr>";
     }
      ?>
   </table>
-</form>

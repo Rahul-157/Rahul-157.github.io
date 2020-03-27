@@ -7,21 +7,21 @@ include("./functions/functions.php");
   <head>
     <meta charset="utf-8">
     <title>My Online Shop</title>
-
+<script type="text/javascript" src='./js/javascript.js'></script>
     <link rel="stylesheet" href="./styles/style.css?v=<?php echo time(); ?>">
   </head>
   <body>
-    <?php cart();?>
+    
     <div class="main_wrapper">
 
        
 
-        <div class="menubar">
+      <div class="menubar">
           <a href="index.php" ><img style="float:left;padding-left: 90px;padding-top: 5px" src="images/logo.png" height="40" width="40"></a>
           <ul id="menu">
-            <li><a href="index.php">All Products</a></li>
-            <li><a href="cart.php">My Cart</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li onmouseover="chng(this)" onmouseout="unchng(this)"><a href="index.php">All Products</a></li>
+            <li onmouseover="chng(this)" onmouseout="unchng(this)"><a href="cart.php">My Cart</a></li>
+            <li onmouseover="chng(this)" onmouseout="unchng(this)"><a href="#">Contact Us</a></li>
           <li >
           <div id="form">
             <form method="get"  action="results.php" enctype="multipart/form-data">
@@ -44,22 +44,22 @@ include("./functions/functions.php");
                  $q=mysqli_fetch_array($q);
                  $q=$q['customer_image'];
                  $name=$_SESSION['customer_name'];
-
-            echo "<span style='padding:0px 2px 0px 35px'>Welcome $name</span><a href='my_account.php'><img src='customer/customer_images/$q' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
-
+ if($q=="")
+                  echo "<span style='padding:0px 2px 0px 35px'>Welcome $name</span><a href='my_account.php'><img src='images/user.jpeg' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
+                else
+            echo "<span style='padding:0px 2px 0px 35px'  >Welcome $name</span><a href='my_account.php'><img src='customer/customer_images/$q' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
       
             }
               ?>  
               <?php
               if(!isset($_SESSION['customer_email'])) {
-                echo "<a href='checkout.php' style='text-decoration:none; color:white;'>Login</a>";
+                echo "<a href='checkout.php?login' style='text-decoration:none;  onmouseover='chng(this)' onmouseout='unchng(this)' color:white;'>Login</a>";
               }
               else {
-                echo "<a href='logout.php' style='text-decoration:none; color:white;'>Logout</a>";
+                echo "<a href='logout.php' style='text-decoration:none; color:white;'  >Logout</a>";
               }?></li>
               </ul>
         </div>
-        
 
         <div id="content_wrapper">
           <div id="sidebar">
@@ -79,15 +79,13 @@ include("./functions/functions.php");
 
           <div id="content_area">
             <div id="products_box">
-
-
               <?php getDetails(); ?>
 </div>
 </div>
           </div>
         </div>
-        <div id="footer">
-          <h2 style="text-align:center;padding:10px">&copy; 2020 by Rahul </h2>
+       <div id="footer">
+          <h3 style="text-align:center;padding:3px">&copy; 2020 by Rahul </h3>
         </div>
     </div>
   </body>

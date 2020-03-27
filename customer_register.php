@@ -8,14 +8,28 @@ include("./functions/functions.php");
     <script type="text/javascript">
   function getFile(){
      document.getElementById("upfile").click();
-}</script>
+     }
+    function val_email(){
+        var email = document.forms["reg"]["c_email"].value;
+        var reg_email=/^\w+(\.\w+)*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+        if (!reg_email.test(email))
+        window.alert("Email Invalid");
+    }
+    function val_tel(){
+        var contact = document.forms["reg"]["c_contact"].value;
+        var reg_tel=/^[0-9]{10}/;
+        if (!reg_tel.test(contact))
+        window.alert("Contact Invalid");
+    }
+  
+</script>
     <meta charset="utf-8">
     <title>My Online Shop</title>
-
+<script type="text/javascript" src='./js/javascript.js'></script>
     <link rel="stylesheet" href="./styles/style.css?v=<?php echo time(); ?>">
   </head>
   <body>
-    <?php cart();?>
+   
     <div class="main_wrapper">
 
        
@@ -28,7 +42,7 @@ include("./functions/functions.php");
             <li><a href="#">Contact Us</a></li>
           <li >
           <div id="form">
-            <form method="get"  action="results.php" enctype="multipart/form-data">
+            <form  method="get"  action="results.php" enctype="multipart/form-data">
               <input class ="ipt" type="text" name="user_query" placeholder="Search Products"/>
               <input id="sbt_btn" type="submit" name="search" value="Search" />
             </form>
@@ -49,14 +63,15 @@ include("./functions/functions.php");
                  $q=$q['customer_image'];
                  $name=$_SESSION['customer_name'];
 
+            if($q=="")
+                  echo "<span style='padding:0px 2px 0px 35px'>Welcome $name</span><a href='my_account.php'><img src='images/user.jpeg' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
+                else
             echo "<span style='padding:0px 2px 0px 35px'>Welcome $name</span><a href='my_account.php'><img src='customer/customer_images/$q' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
-
-      
             }
               ?>  
               <?php
               if(!isset($_SESSION['customer_email'])) {
-                echo "<a href='checkout.php' style='text-decoration:none; color:white;'>Login</a>";
+                echo "<a href='checkout.php?login' style='text-decoration:none; color:white;'>Login</a>";
               }
               else {
                 echo "<a href='logout.php' style='text-decoration:none; color:white;'>Logout</a>";
@@ -85,22 +100,22 @@ include("./functions/functions.php");
             <div id="products_box">
 
 <br>
-            <form  action="customer_register.php"  method="post" enctype="multipart/form-data">
+            <form name="reg" action="customer_register.php"  method="post" enctype="multipart/form-data">
              <h3>Create an Account</h3><br>
                <label>Name</label>
               <input class='ipt' type="text" name="c_name" required><br>
                <label>Email</label>
-                   <input class='ipt' type="text" name="c_email"  required> <br>
+                   <input class='ipt' name="c_email" onfocusout="val_email()" required> <br>
                    <label>Password</label>
-                  <input class='ipt' type="password" name="c_password" required > <br>
+                  <input class='ipt'  type="password" name="c_password" required > <br>
                   <label>Country</label>
-                   <input class='ipt' type="text" name="c_country"   required><br>
+                   <input class='ipt'  name="c_country"   required><br>
                <label>City</label>
-                  <input class='ipt' type="text" name="c_city"  required><br>
+                  <input class='ipt'  name="c_city"  required><br>
                   <label>Contact No</label>
-                  <input class='ipt' type="text" name="c_contact"  required><br>
+                  <input class='ipt' onfocusout="val_tel()" name="c_contact"  required><br>
                   <label>Address</label>
-                   <textarea class='ipt' name="c_addr" rows="20"  cols="30" ></textarea> <br>
+                  <input class='ipt'  name="c_addr"  required><br>
                    <label id="img_upload" onclick="getFile();">Upload Image</label>
                   <div  style='height: 0px;width:0px; overflow:hidden;'> <input class='ipt' type="file" hidden="true" name="c_image" id="upfile" ></div><br>
                   <input class='btn' type="submit" name="Register" value="Register"> 
@@ -129,11 +144,14 @@ include("./functions/functions.php");
               if($add_customer){
                 echo "<script>alert('Registered Succesfully !')</script>";
                 $_SESSION['customer_email']=$c_email;
-                if($total_cost>0){
-               echo "<script>window.open('checkout.php','_self')</script>";}
-               else {
-
-                 echo "<script>window.open('my_account.php','_self')</script>";}
+                $_SESSION['customer_name']=$c_name;
+                
+                 echo "<script>window.location.assign('cart.php')</script>";
+               }
+               else{
+                echo "<script>alert('Could Not Register, Try another Email !')</script>";
+                
+                 echo "<script>window.location.assign(customer_register.php);</script>";
                }
               }
 
@@ -144,7 +162,7 @@ include("./functions/functions.php");
           </div>
         </div>
         <div id="footer">
-          <h2 style="text-align:center;padding:10px">&copy; 2020 by Rahul </h2>
+          <h3 style="text-align:center;padding:3px">&copy; 2020 by Rahul </h3>
         </div>
     </div>
   </body>

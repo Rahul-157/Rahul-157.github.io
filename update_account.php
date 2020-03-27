@@ -25,13 +25,27 @@ include("./functions/functions.php");
 <script type="text/javascript">
   function getFile(){
      document.getElementById("upfile").click();
-}</script>
-              <form  align="center" action=""  method="post" enctype="multipart/form-data">
+     }
+    function val_email(){
+        var email = document.forms["reg"]["c_email"].value;
+        var reg_email=/^\w+(\.\w+)*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+        if (!reg_email.test(email))
+        window.alert("Email Invalid");
+    }
+    function val_tel(){
+        var contact = document.forms["reg"]["c_contact"].value;
+        var reg_tel=/^[0-9]{10}/;
+        if (!reg_tel.test(contact))
+        window.alert("Contact Invalid");
+    }
+  
+</script>
+              <form   name="reg" align="center" action=""  method="post" enctype="multipart/form-data">
              <h3>Update Details</h3><br>
                <label>Name</label>
               <input class='ipt' type="text" name="c_name" value="<?php echo $name;?>" required><br>
                <label>Email</label>
-                   <input class='ipt' type="text" name="c_email" value="<?php echo $email;?>" required> <br>
+                   <input class='ipt'   name="c_email" onfocusout="val_email()" value="<?php echo $email;?>" required> <br>
                    <label>Password</label>
                   <input class='ipt' type="password" name="c_password" required > <br>
                   <label>Country</label>
@@ -39,9 +53,10 @@ include("./functions/functions.php");
                <label>City</label>
                   <input class='ipt' type="text" name="c_city"  value="<?php echo $city;?>" required><br>
                   <label>Contact No</label>
-                  <input class='ipt' type="text" name="c_contact" value="<?php echo $contact;?>" required><br>
+                  <input class='ipt' onfocusout="val_tel()" name="c_contact" value="<?php echo $contact;?>" required><br>
                   <label>Address</label>
-                   <textarea class='ipt' name="c_addr" rows="20"  cols="30" ><?php echo $address; ?></textarea> <br>
+                   <input class='ipt'  name="c_addr" value="<?php echo $address;?>" required>
+                   <br>
                    <label id="img_upload" onclick="getFile();">Upload Image</label>
                   <div  style='height: 0px;width:0px; overflow:hidden;'> <input class='ipt' type="file" hidden="true" name="c_image" id="upfile" ></div><br>
                   <input class='btn' type="submit" name="Update" value="Update"> 

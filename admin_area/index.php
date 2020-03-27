@@ -10,14 +10,12 @@
     <?php session_start();
     if(!isset($_SESSION['admin_mail']))
   {
-    echo "<script>window.open('admin_login.php','_self')</script>";}
+    echo "<script>window.location.assign('admin_login.php')</script>";}
      ?>
 <div class="main-wrapper">
   <div id="header">
-  </div>
-
-
-              <div id="left">
+  </div><div id="parent">
+          <div id="left">
           <?php
           global $con;
             $mail=$_SESSION['admin_mail'];
@@ -97,6 +95,7 @@
                   <li><a href='index.php?logout'>Admin Logout</a></li>
                 </ul>
               </div>
+            </div>
 
 </div>
   </body>

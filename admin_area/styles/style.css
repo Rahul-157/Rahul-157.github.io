@@ -22,7 +22,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-  background-color: skyblue;
+  background-color: #f4f7f6;
 }
 ol, ul {
 	list-style: none;
@@ -35,7 +35,53 @@ q:before, q:after {
 	content: '';
 	content: none;
 }
- 
+td{
+	text-align: left;
+	vertical-align: middle;
+}
+
+tr{
+  margin:auto;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
+  
+}
+
+th{
+	text-align: left;
+	vertical-align: middle;
+}
+ table{
+ 	border-color: #609fdb;
+ }
+ button ,.btn{
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+    background: #3989bf;
+	color: white;
+	height: 20px;
+	width: auto;
+	font-family:Roboto,Arial,sans-serif
+}
+label{
+	font-weight: bolder;
+    width: 100px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    text-align: left;
+}
+select{
+	font-weight: bold !important;
+  text-transform: uppercase;
+  padding: 10px;
+    display: inline-block;
+    border-radius: 5px;	
+    background: #f1f1f1;
+  width: 433px;
+  height: auto;
+}
 .main-wrapper{
   width:1000px;
   margin:auto;
@@ -46,37 +92,86 @@ q:before, q:after {
   width: 1000px;
   height:120px;
   background-image:url('../images/bg-header.jpg');
-  border-bottom:5px groove orange;
+  
+}
+#parent{
+	margin-top:20px;
+    overflow: hidden;
+    position: relative;
+    width: 100%; 
 }
 #right{
-  width:200px;
-  height:550px;
-  background :  black;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
+  width:18%;
+  height:100%;
+  min-height: 558px;
+  background :  #3989bf;
   float:right;
+  position: absolute;
+  right: 0;
+  top: 0;
+
 }
 #left{
-  width:795px;
-  height:550px;
-  background-image:url('../images/bg-body.gif');
-  border-right:5px groove orange;
+  width:80.5%;
+  height:100%;
+  min-height: 558px;
+  background:white;
   float:left;
+  
 }
 .sidebar_links a{
-  margin:7px;
+    margin:3px;
 	padding:5px;
 	list-style:none;
 	display:block;
 	font-size: 18px;
 	font-family: Ubuntu;
-	text-align: center;
+	text-align: left;
 	text-decoration: none;
-	color:#c47a1f;
+	color:white;
 }
+
 .sidebar_links a:hover{
-  color:white;
-	background: orange;
+    color:white;
+	background: #609fdb;
 	font-weight: bolder;
 }
 .sidebar_links li {
   	background: #white;
+}
+
+.single_product img {
+width:100px;
+ height: 100px;
+ margin:auto;
+ margin-bottom: 20px;
+ position: relative;
+display: block;
+ border-radius: 5px;
+}
+
+.ipt{
+    width: 400px;
+    height:10px;
+    padding: 15px;
+    display: inline-block;
+    border-radius: 5px;	
+    background: #f1f1f1;
+}
+
+#img_upload {
+  font-family: calibri;
+  width: 150px;
+  height: auto;
+  margin:auto;
+  padding: 10px;
+  display: block;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border: 1px solid #BBB;
+  text-align: center;
+  background-color: #DDD;
+  cursor: pointer;
 }

@@ -10,7 +10,7 @@ include("functions/functions.php");
       </tr>
       <tr >
       <td align="left">Email</td>
-      <td>  <input class="ipt" type="text" name="email" size="30"/> </td>
+      <td>  <input class="ipt" type="email" name="email" size="30"/> </td>
       </tr>
       <tr >
         <td align="left">Password</td>
@@ -29,7 +29,7 @@ include("functions/functions.php");
 <?php
 
 global $con;
-global $total_cost;
+
 if(isset($_POST['login']))
 {
   $mail=$_POST['email'];
@@ -42,15 +42,15 @@ if(isset($_POST['login']))
     $cust=mysqli_fetch_array($sel_c);
     $_SESSION['customer_email']=$mail;
     $_SESSION['customer_name']=$cust['customer_name'];
-    $t=$_SESSION['cost'];
+    $t=$_SESSION['checkout'];
 
-    if($t>0){
+    if($t==1){
 
     echo "<script>window.open('checkout.php','_self')</script>";
   }
     else {
       // code...
-      echo "<script>window.open('my_account.php','_self')</script>";
+      echo "<script>window.open('index.php','_self')</script>";
 
     }
   }

@@ -2,59 +2,43 @@
 <?php
 include "./includes/functions.php"
 ?>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
+<script type="text/javascript">
+   function getFile(){
+     document.getElementById("upfile").click();
+     }
+</script>
 
-    <title>Inserting Products</title>
-  </head>
-  <body bgcolor="skyblue" >
-    <form  action="insert_product.php" method="post" enctype="multipart/form-data">
-      <table align="center" width="795" height="550" border="2" bgcolor="orange">
-        <tr align="center">
-          <th colspan="7">Insert New Post Here</th>
-        </tr>
-        <tr>
-          <th align="right">Product Title : </th>
-          <td> <input type="text" name="product_title" required /> </td>
-        </tr>
-        <tr>
-          <th align="right">Product Category : </th>
-          <td><select  name="product_category" required>
-            <option value="-1">Select a Category</option>
-              <?php showCats(); ?>
-          </select></td>
-        </tr>
-        <tr>
-          <th align="right">Product Brand : </th>
-          <td> <select  name="product_brand" required>
-            <option value="-1">Select a Brand</option>
-            <?php showBrands(); ?>
-          </select> </td>
-        </tr>
-        <tr>
-          <th align="right">Product Image : </th>
-          <td> <input type="file" name="product_image" required/> </td>
-        </tr>
-        <tr>
-          <th align="right">Product Price : </th>
-          <td> <input type="text" name="product_price" required /> </td>
-        </tr>
-        <tr>
-          <th align="right">Product Decsription : </th>
-          <td> <textarea name="product_desc" rows="15" cols="40" ></textarea> </td>
-        </tr>
-        <tr>
-          <th align="right">Product Keyword : </th>
-          <td> <input type="text" name="product_keywords" /> </td>
-        </tr>
-        <tr align="center">
-          <td colspan="7"> <input type="submit" name="insert_post" value="Add Now"/> </td>
-        </tr>
-      </table>
+    <form  style="margin-left:40px;text-align: center" name="reg" action="insert_product.php" method="post" enctype="multipart/form-data">
+      <br>
+        <h3>Insert New Product</h3><br>
+               <label>Title</label>
+              <input class='ipt' type="text" name="product_title" required><br>
+               <label>Category</label>
+                   <select  name="product_category" required>
+                     <option value="-1">Select a Category</option>
+                         <?php showCats(); ?>
+                    </select>
+<br>
+                <label>Brand</label>
+                    <select  name="product_brand" required>
+                     <option value="-1">Select a Brand</option>
+                          <?php showBrands(); ?>
+                     </select> 
+
+                 <br>
+                   
+               <label>Price </label>
+                  <input class='ipt'  name="product_price"  required><br>
+                  <label>Decsription  </label>
+                  <input class='ipt' name="product_desc"  required><br>
+                  <label>Keywords  </label>
+                  <input class='ipt'  name="product_keywords"  required><br>
+                  <br>
+                   <label id="img_upload" onclick="getFile();">Upload Image</label>
+                  <div  style='height: 0px;width:0px; overflow:hidden;'> <input class='ipt' type="file" hidden="true" name="product_image" id="upfile" ></div><br>
+                  <input class='btn'  type="submit" name="insert_post" value="Add Now"> 
     </form>
-  </body>
-</html>
+ 
 <?php
 
 if(isset($_POST['insert_post'])){

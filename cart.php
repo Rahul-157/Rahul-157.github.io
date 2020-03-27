@@ -11,6 +11,7 @@ include("./functions/functions.php");
     <title>My Online Shop</title>
 
     <link rel="stylesheet" href="./styles/style.css?v=<?php echo time(); ?>">
+    <script type="text/javascript" src='./js/javascript.js'></script>
   </head> 
     <div class="main_wrapper">
 
@@ -19,9 +20,9 @@ include("./functions/functions.php");
         <div class="menubar">
           <a href="index.php" ><img style="float:left;padding-left: 90px;padding-top: 5px" src="images/logo.png" height="40" width="40"></a>
           <ul id="menu">
-            <li><a href="index.php">All Products</a></li>
-            <li><a href="cart.php">My Cart</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li onmouseover="chng(this)" onmouseout="unchng(this)"><a href="index.php">All Products</a></li>
+            <li onmouseover="chng(this)" onmouseout="unchng(this)"><a href="cart.php">My Cart</a></li>
+            <li onmouseover="chng(this)" onmouseout="unchng(this)"><a href="#">Contact Us</a></li>
           <li >
           <div id="form">
             <form method="get"  action="results.php" enctype="multipart/form-data">
@@ -44,18 +45,19 @@ include("./functions/functions.php");
                  $q=mysqli_fetch_array($q);
                  $q=$q['customer_image'];
                  $name=$_SESSION['customer_name'];
-
-            echo "<span style='padding:0px 2px 0px 35px'>Welcome $name</span> <img src='customer/customer_images/$q' style='border-radius:20px;vertical-align: middle'  width='30' height='30' >";
-
+ if($q=="")
+                  echo "<span style='padding:0px 2px 0px 35px'>Welcome $name</span><a href='my_account.php'><img src='images/user.jpeg' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
+                else
+            echo "<span style='padding:0px 2px 0px 35px'  >Welcome $name</span><a href='my_account.php'><img src='customer/customer_images/$q' style='border-radius:20px;vertical-align: middle'  width='30' height='30' ></a>";
       
             }
               ?>  
               <?php
               if(!isset($_SESSION['customer_email'])) {
-                echo "<a href='checkout.php' style='text-decoration:none; color:white;'>Login</a>";
+                echo "<a href='checkout.php?login' style='text-decoration:none;  onmouseover='chng(this)' onmouseout='unchng(this)' color:white;'>Login</a>";
               }
               else {
-                echo "<a href='logout.php' style='text-decoration:none; color:white;'>Logout</a>";
+                echo "<a href='logout.php' style='text-decoration:none; color:white;'  >Logout</a>";
               }?></li>
               </ul>
         </div>
@@ -99,11 +101,11 @@ include("./functions/functions.php");
                     $pro_title = substr($pro_title,0,40).'...';
                     $single_price=$pro_price*$pro_qty;
                     echo "<a href='details.php?pro_id=$pro_id'>
-                           <div class='single_product' style='width:150px'>
+                           <div class='single_product' style='width:213px'>
                             <img src='admin_area/product_images/$pro_image'>
                             <div class='single_product_container'>
                             <div class='single_product_title'>$pro_title </div><br></a>
-                            <p class='single_product_price'>₹$pro_price
+                            <p class='single_product_price'>₹ $pro_price
                              <a href='cart.php?add_cart=$pro_id' style='float:right'><button>+</button></a>
                              <input style='width:20px;height:20px;float:right' value=$pro_qty>
                              <a href='cart.php?remove_cart=$pro_id' style='float:right'><button>-</button></a>
@@ -140,29 +142,35 @@ include("./functions/functions.php");
                     $get_pro=mysqli_query($con,$get_pro);
                     $get_pro=mysqli_fetch_array($get_pro);
                     $pro_price=$get_pro['product_price'];
+
                     $pro_title=$get_pro['product_title'];
                     $len=strlen($pro_title);
                     if($len>40)
                     $pro_title = substr($pro_title,0,40).'...';
                     $sub_tot=$pro_qty*$pro_price;
                     $tot=$tot+$sub_tot;
-                    $tot_qty=$tot_qty+$pro_qty;
+
+                    $sub_tot=(string)number_format (  $sub_tot);
+                    $tot_qty=  $tot_qty+$pro_qty;
+
                     echo "
                     <tr style='border-bottom: 1px solid #ccc;'><td width='40%' align='left'>$pro_title</td><td width='15%' align=
                     'left' >$pro_qty</td><td width='15%' align='left' >₹ $sub_tot</td></tr>
                     ";
                   }
-                  echo "<tr><th align=
+                  $_SESSION['amnt']=$tot;
+                  $tot=(string)number_format (  $tot);
+                  echo "<tr style='height:30px !important;vertical-align:bottom'><th align=
                     'left' >Total</th><th align='left'>$tot_qty</th><th align=
                     'left'>₹ $tot</th></tr>";
               ?>
 
             </table>
-          
+            <a href="checkout.php?checkout"><button style="height: 30px;width: 80px;margin-top: 40px">Checkout</button></a>
             </div>
           </div>
         </div>
-        <div id="footer">
+       <div id="footer">
           <h3 style="text-align:center;padding:3px">&copy; 2020 by Rahul </h3>
         </div>
     </div>
