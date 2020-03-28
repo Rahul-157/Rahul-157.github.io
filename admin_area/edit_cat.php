@@ -1,15 +1,9 @@
-<form method="post">
-  <table width="795" align="center" bgcolor="pink" cellpadding="6" border="2 ">
-    <tr>
-      <h2> Edit  category</h2>
-    </tr>
-    <tr>
-       <td align="center"><input type="text" name="up_cat" placeholder="Enter New Category Name"></td>
-    </tr>
-    <tr>
-      <td align="center"> <input type="submit" name="done" value="Update"> </td>
-    </tr>
-  </table>
+<br>
+<h3 align="center" style="margin-left: 40px">Update Category</h3><br>
+<form  action="" method="post"  style="margin-left:40px;text-align: center">
+<label style="font-size: 12px">Update Category</label>
+<input  class='ipt' type="text" name="up_cat" placeholder=" Category Name" ><br>
+<input class='btn' type="submit" name="done" value="Update">
 </form>
 <?php
 include("includes/functions.php");

@@ -26,6 +26,8 @@
             include('insert_product.php');}
             if(isset($_GET['view_product'])){
               include('view_products.php');}
+            if(isset($_GET['view_order'])){
+              include('view_orders.php');}
             if(isset($_GET['edit_pro'])){
               include('edit_product.php');}
             if(isset($_GET['new_cat'])){
@@ -100,8 +102,7 @@
                   <li><a href='index.php?new_brand'>Insert New Brand</a></li>
                   <li><a href='index.php?view_brand'>View All Brands</a></li>
                   <li><a href='index.php?view_customers'>View Customers</a></li>
-                  <li><a href='#'>View Orders</a></li>
-                  <li><a href='#'>View Payments</a></li>
+                  <li><a href='index.php?view_order'>View Orders</a></li>
                   <li><a href='index.php?logout'>Admin Logout</a></li>
                 </ul>
               </div>

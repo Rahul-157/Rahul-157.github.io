@@ -1,7 +1,6 @@
 <?php
 $con = mysqli_connect("localhost","root","","ecommerce");
-$total_cost=0;
-$total_item=0;
+
 if (mysqli_connect_errno())
   {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -53,6 +52,9 @@ if (!function_exists('add_cart')){
 function add_cart($pro_id){
     global $con;
     $ip = getIp();
+    $get_pro="select product_price from products where product_id=$pro_id;";
+    $get_pro=mysqli_query($con,$get_pro);
+    $get_pro=mysqli_fetch_array($get_pro);
     $check_pro="select * from cart where p_id=$pro_id and ip_add='$ip' ";
     $run_check=mysqli_query($con,$check_pro);
     if(mysqli_num_rows($run_check)==1){
@@ -60,21 +62,38 @@ function add_cart($pro_id){
       $qty=$row['qty']+1;
       $insert_pro="update  cart set qty=$qty where ip_add='$ip' and p_id=$pro_id ";
       $run_pro=mysqli_query($con,$insert_pro);
-
-      echo "<script>
-      var loc = window.location.href;
-      loc=loc.split('?');
-      window.location.assign(loc[0])</script>";
+      if($run_pro){
+      $_SESSION['qty']++;
+      $_SESSION['amnt']=$_SESSION['amnt']+$get_pro['product_price'];
+      echo "
+      <script>
+       
+          var loc = window.location.href;
+          loc=loc.split('?');
+          window.location.assign(loc[0])
+         
+      </script>";
+      }
     }
     else
     {
       $insert_pro="insert into cart (p_id,ip_add,qty) values($pro_id,'$ip',1) ";
       $run_pro=mysqli_query($con,$insert_pro);
-      echo "<script>var loc = window.location.href;
-      loc=loc.split('?');
-      window.location.assign(loc[0])</script>";
+      if($run_pro){
+      $_SESSION['qty']++;
+      $_SESSION['amnt']=$_SESSION['amnt']+$get_pro['product_price'];
+      echo "
+      <script>
+       
+          var loc = window.location.href;
+          loc=loc.split('?');
+          window.location.assign(loc[0])
+         
+      </script>";
+      }
     }
     
+
   }
 }
 
@@ -85,7 +104,9 @@ if (!function_exists('remove_cart')){
 function remove_cart($pro_id){
     global $con;
     $ip = getIp();
-    
+    $get_pro="select product_price from products where product_id=$pro_id;";
+    $get_pro=mysqli_query($con,$get_pro);
+    $get_pro=mysqli_fetch_array($get_pro);
     $check_pro="select * from cart where p_id=$pro_id and ip_add='$ip' ";
     $run_check=mysqli_query($con,$check_pro);
     if(mysqli_num_rows($run_check)==1){
@@ -94,24 +115,28 @@ function remove_cart($pro_id){
       if ($qty==0){
       $remove_pro="delete  from cart where ip_add='$ip' and p_id=$pro_id ";
       $run_pro=mysqli_query($con,$remove_pro);
-      echo "<script>
-      var loc = window.location.href;
+      if($run_pro){
+      $_SESSION['qty']--;
+      $_SESSION['amnt']=$_SESSION['amnt']-$get_pro['product_price'];
+      echo "<script>var loc = window.location.href;
       loc=loc.split('?');
       window.location.assign(loc[0])</script>";
+      }
       }
       else
       {
       $remove_pro="update  cart set qty=$qty where ip_add='$ip' and p_id=$pro_id ";
       $run_pro=mysqli_query($con,$remove_pro);
-      echo "<script>
-      var loc = window.location.href;
+      if($run_pro){
+      $_SESSION['qty']--;
+      $_SESSION['amnt']=$_SESSION['amnt']-$get_pro['product_price'];
+      echo "<script>var loc = window.location.href;
       loc=loc.split('?');
       window.location.assign(loc[0])</script>";
       }
-     
+      }
     }
-     $_SESSION['qty']--;
-  }
+    }
 }
 
 if (!function_exists('getPro')){

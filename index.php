@@ -1,7 +1,24 @@
 <!DOCTYPE html>
 <?php
 session_start();
+$_SESSION['qty']=0;
+$_SESSION['amnt']=0;
 include("./functions/functions.php");
+$ip = getIp();
+global $con;
+$cart_items="select * from cart where ip_add='$ip';";
+$cart_items=mysqli_query($con,$cart_items);
+if($cart_items){
+  $_SESSION['qty']=mysqli_num_rows($cart_items);
+  while($row=mysqli_fetch_array($cart_items)) 
+  {
+    $id=$row['p_id'];
+    $get_pro="select product_price from products where product_id=$id;";
+    $get_pro=mysqli_query($con,$get_pro);
+    $get_pro=mysqli_fetch_array($get_pro);
+    $_SESSION['amnt']=$_SESSION['amnt']+$get_pro['product_price'];
+  }
+}
 ?>
 <html lang="en" dir="ltr">
   <head>
@@ -11,14 +28,14 @@ include("./functions/functions.php");
     <link rel="stylesheet" href="./styles/style.css?v=<?php echo time(); ?>">
   </head>
   <body>
-    <?php 
+   
+    <div class="main_wrapper">
+
+        <?php 
     if(isset($_GET['add_cart'])){
         add_cart($_GET['add_cart']);
     }
     ?>
-    <div class="main_wrapper">
-
-       
 <div class="menubar">
           <a href="index.php" ><img style="float:left;padding-left: 90px;padding-top: 5px" src="images/logo.png" height="40" width="40"></a>
           <ul id="menu">

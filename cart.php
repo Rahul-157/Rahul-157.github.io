@@ -14,9 +14,6 @@ include("./functions/functions.php");
     <script type="text/javascript" src='./js/javascript.js'></script>
   </head> 
     <div class="main_wrapper">
-
-       
-
         <div class="menubar">
           <a href="index.php" ><img style="float:left;padding-left: 90px;padding-top: 5px" src="images/logo.png" height="40" width="40"></a>
           <ul id="menu">
@@ -84,9 +81,11 @@ include("./functions/functions.php");
               <h3>Shopping Cart</h3><hr>
                   <?php
                   global $con;
+                
                   $ip=getIp();
                   $get_cart_item="select * from cart where ip_add='$ip' ";
                   $get_cart_item=mysqli_query($con,$get_cart_item);
+
                   while($row_cart=mysqli_fetch_array($get_cart_item)){
                     $pro_qty=$row_cart['qty'];
                     $pro_id=$row_cart['p_id'];
@@ -158,8 +157,8 @@ include("./functions/functions.php");
                     'left' >$pro_qty</td><td width='15%' align='left' >₹ $sub_tot</td></tr>
                     ";
                   }
-                  $_SESSION['amnt']=$tot;
-                  $tot=(string)number_format (  $tot);
+                  
+                  $tot=(string)number_format (  $_SESSION['amnt']);
                   echo "<tr style='height:30px !important;vertical-align:bottom'><th align=
                     'left' >Total</th><th align='left'>$tot_qty</th><th align=
                     'left'>₹ $tot</th></tr>";

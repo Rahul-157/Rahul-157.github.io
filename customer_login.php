@@ -43,21 +43,15 @@ if(isset($_POST['login']))
     $_SESSION['customer_email']=$mail;
     $_SESSION['customer_name']=$cust['customer_name'];
     $t=$_SESSION['checkout'];
-
     if($t==1){
-
-    echo "<script>window.open('checkout.php','_self')</script>";
-  }
+    echo "<script>window.location.assign('payment.php');</script>";
+    }
     else {
-      // code...
-      echo "<script>window.open('index.php','_self')</script>";
-
+      echo "<script>window.location.assign('my_account.php')</script>";
     }
   }
   else {
-    // code...
-    echo "<script>window.alert('Invalid Email or Password !')</script>";
-      echo "<script>window.open('checkout.php','_self')</script>";
+      echo "<script>window.alert('Invalid Email or Password !')</script>";
   }
 
 }
