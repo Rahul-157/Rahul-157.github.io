@@ -137,8 +137,8 @@ include("./functions/functions.php");
               $c_addr=$_POST['c_addr'];
               $c_contact=$_POST['c_contact'];
               $ip=getIp();
-
-              move_uploaded_file($_FILES['c_image']['tmp_name'],$_SERVER['DOCUMENT_ROOT'] . '/ecommerce/customer/customer_images/'. $_FILES['c_image']['name']);
+              if($c_image!="")
+                move_uploaded_file($_FILES['c_image']['tmp_name'],$_SERVER['DOCUMENT_ROOT'] . '/ecommerce/customer/customer_images/'. $_FILES['c_image']['name']);
               $add_customer="insert into customers (customer_ip,customer_name,customer_email,customer_password,customer_country,customer_city,customer_contact,customer_addr,customer_image) values ('$ip','$c_name','$c_email','$c_password','$c_country','$c_city','$c_contact','$c_addr','$c_image')";
               $add_customer=mysqli_query($con,$add_customer);
               if($add_customer){

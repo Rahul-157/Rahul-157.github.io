@@ -76,8 +76,8 @@ include("./functions/functions.php");
               $c_addr=$_POST['c_addr'];
               $c_contact=$_POST['c_contact'];
               $ip=getIp();
-
-              move_uploaded_file($_FILES['c_image']['tmp_name'],$_SERVER['DOCUMENT_ROOT'] . '/ecommerce/customer/customer_images/'. $_FILES['c_image']['name']);
+              if($c_image!="")
+                move_uploaded_file($_FILES['c_image']['tmp_name'],$_SERVER['DOCUMENT_ROOT'] . '/ecommerce/customer/customer_images/'. $_FILES['c_image']['name']);
               $add_customer="update    customers set customer_name='$c_name',customer_country='$c_country',customer_city='$c_city',customer_contact='$c_contact',customer_addr='$c_addr',customer_image='$c_image' where customer_email='$user'  ";
 
               $add_customer=mysqli_query($con,$add_customer);
